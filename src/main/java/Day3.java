@@ -1,3 +1,5 @@
+import utils.Utils;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -16,9 +18,8 @@ public class Day3 {
     System.out.println("Task 2 answer: " + resultTask2);
   }
 
-  public static int solveTask1(String inputString) {
+  public static int solveTask1(String[] lines) {
     AtomicInteger score = new AtomicInteger();
-    String[] lines = inputString.split("\n");
     List<String> characterPriorityList = splitString(CHARACTERS);
 
     Arrays.stream(lines).forEach(line -> {
@@ -29,9 +30,8 @@ public class Day3 {
     return score.get();
   }
 
-  public static int solveTask2(String inputString) {
+  public static int solveTask2(String[] lines) {
     int score = 0;
-    String[] lines = inputString.split("\n");
     List<String> characterPriorityList = splitString(CHARACTERS);
 
     for(int i = 0; i<lines.length; i = i+3) {

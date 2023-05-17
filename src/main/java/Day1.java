@@ -1,3 +1,5 @@
+import utils.Utils;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -14,20 +16,19 @@ public class Day1 {
         System.out.println("Top 3 elves with most calories: " + resultTask2);
     }
 
-    public static int solveTask1(String inputString) {
-        List<Integer> caloriesPerElf = createSorterElfCaloriesList(inputString);
+    public static int solveTask1(String[] lines) {
+        List<Integer> caloriesPerElf = createSorterElfCaloriesList(lines);
         return caloriesPerElf.get(0);
     }
 
-    public static int solveTask2(String inputString) {
-        List<Integer> caloriesPerElf = createSorterElfCaloriesList(inputString);
+    public static int solveTask2(String[] lines) {
+        List<Integer> caloriesPerElf = createSorterElfCaloriesList(lines);
         return caloriesPerElf.get(0) + caloriesPerElf.get(1) + caloriesPerElf.get(2);
     }
 
-    private static List<Integer> createSorterElfCaloriesList(String inputString) {
+    private static List<Integer> createSorterElfCaloriesList(String[] lines) {
         List<Integer> caloriesPerElf = new ArrayList<>();
         caloriesPerElf.add(0);
-        String[] lines = inputString.split("\n");
 
         Arrays.stream(lines).forEach(line -> {
             if(line.compareTo("") == 0) {
