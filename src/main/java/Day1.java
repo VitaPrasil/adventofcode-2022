@@ -1,14 +1,12 @@
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class Day1 {
 
     public static void main(String[] args) {
-        String fileName = "day1/input.txt";
+        String fileName = "input-day1.txt";
         int resultTask1 = solveTask1(Utils.getFileFromResourceAsString(fileName));
         int resultTask2 = solveTask2(Utils.getFileFromResourceAsString(fileName));
 

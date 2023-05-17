@@ -8,7 +8,7 @@ public class Day2 {
 
         int resultTask1 = solveTask1(Utils.getFileFromResourceAsString(fileName));
         int resultTask2 = solveTask2(Utils.getFileFromResourceAsString(fileName));
-//
+
         System.out.println("Total score task 1: " + resultTask1);
         System.out.println("Total score task 2: " + resultTask2);
     }
