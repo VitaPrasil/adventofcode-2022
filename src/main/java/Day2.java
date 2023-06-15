@@ -1,3 +1,5 @@
+import utils.Utils;
+
 import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -8,13 +10,12 @@ public class Day2 {
 
         int resultTask1 = solveTask1(Utils.getFileFromResourceAsString(fileName));
         int resultTask2 = solveTask2(Utils.getFileFromResourceAsString(fileName));
-//
+
         System.out.println("Total score task 1: " + resultTask1);
         System.out.println("Total score task 2: " + resultTask2);
     }
 
-    public static int solveTask1 (String inputString) {
-        String[] lines = inputString.split("\n");
+    public static int solveTask1 (String[] lines) {
         AtomicInteger score = new AtomicInteger();
         Arrays.stream(lines).forEach(line -> {
             String opponentVote = line.split(" ")[0];
@@ -25,8 +26,7 @@ public class Day2 {
         return score.get();
     }
 
-    public static int solveTask2 (String inputString) {
-        String[] lines = inputString.split("\n");
+    public static int solveTask2 (String[] lines) {
         AtomicInteger score = new AtomicInteger();
         Arrays.stream(lines).forEach(line -> {
             String opponentVote = line.split(" ")[0];
