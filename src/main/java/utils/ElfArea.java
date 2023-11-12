@@ -2,27 +2,21 @@ package utils;
 
 public class ElfArea {
 
-    private int fromArea;
-    private int toArea;
+    private final int fromArea;
+    private final int toArea;
 
     public ElfArea(String area) {
         String[] splitArea = area.split("-");
-        this.fromArea = Integer.valueOf(splitArea[0]);
-        this.toArea = Integer.valueOf(splitArea[1]);
+        this.fromArea = Integer.parseInt(splitArea[0]);
+        this.toArea = Integer.parseInt(splitArea[1]);
     }
 
     public boolean fullOverlap(ElfArea elfAreaToCheck) {
-        if(this.fromArea <= elfAreaToCheck.fromArea && this.toArea >= elfAreaToCheck.toArea) {
-            return true;
-        }
-        return false;
+        return this.fromArea <= elfAreaToCheck.fromArea && this.toArea >= elfAreaToCheck.toArea;
     }
 
     public boolean partialOverlap(ElfArea elfAreaToCheck) {
-        if((this.fromArea <= elfAreaToCheck.toArea && this.toArea >= elfAreaToCheck.toArea)
-                || (this.toArea >= elfAreaToCheck.fromArea && this.toArea <= elfAreaToCheck.toArea)) {
-            return true;
-        }
-        return false;
+        return (this.fromArea <= elfAreaToCheck.toArea && this.toArea >= elfAreaToCheck.toArea)
+                || (this.toArea >= elfAreaToCheck.fromArea && this.toArea <= elfAreaToCheck.toArea);
     }
 }

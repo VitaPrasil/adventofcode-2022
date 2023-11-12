@@ -1,14 +1,8 @@
-
 import utils.ElfArea;
 import utils.Utils;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
 public class Day4 {
 
@@ -52,19 +46,5 @@ public class Day4 {
 
     private static boolean checkPartialOverlappedAreas(ElfArea elfArea1, ElfArea elfArea2) {
         return elfArea1.partialOverlap(elfArea2) || elfArea2.partialOverlap(elfArea1);
-    }
-
-    private String getFileFromResourceAsString(String fileName) {
-        ClassLoader classLoader = getClass().getClassLoader();
-        InputStream inputStream = classLoader.getResourceAsStream(fileName);
-        StringBuffer sb = new StringBuffer();
-
-        if (inputStream == null) {
-            throw new IllegalArgumentException("file not found! " + fileName);
-        }
-        String text = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))
-                .lines()
-                .collect(Collectors.joining("\n"));
-        return text;
     }
 }
