@@ -2,7 +2,10 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.*;
+import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Objects;
 
 public class Day1 {
 
@@ -26,7 +29,7 @@ public class Day1 {
   private static LinkedList<Integer> computeCalories(List<String> lines) {
     LinkedList<Integer> calories = new LinkedList<>(List.of(0));
     lines.forEach(line -> {
-      if(line.isEmpty()) {
+      if (line.isEmpty()) {
         calories.add(0);
       } else {
         calories.add(calories.removeLast() + Integer.parseInt(line));

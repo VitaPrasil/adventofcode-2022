@@ -22,7 +22,7 @@ public class Day2Test {
   }
 
   @Test
-  public void dayy1_task2() throws URISyntaxException, IOException {
+  public void day1_game2() throws URISyntaxException, IOException {
     int solveGame2 = Day2.game2(Files.readAllLines(Path.of(Objects.requireNonNull(Day1.class.getClassLoader().getResource(INPUT_FILE)).toURI())));
     Assert.assertThat(solveGame2, CoreMatchers.is(12));
   }
