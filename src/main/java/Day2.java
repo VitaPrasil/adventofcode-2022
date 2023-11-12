@@ -1,98 +1,44 @@
-import utils.Utils;
-
-import java.util.Arrays;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 public class Day2 {
 
-    public static void main(String[] args) {
-        String fileName = "input-day2.txt";
+  private static final Map<String, Integer> voteScorePoints = Map.of("X",1, "Y", 2, "Z", 3);
+  private static final Map<String, Map<String, Integer>> evaluate = Map.of(
+          "X" ,Map.of("A",3, "B", 0, "C", 6),
+          "Y" ,Map.of("A",6, "B", 3, "C", 0),
+          "Z" ,Map.of("A",0, "B", 6, "C", 3));
+  private static final Map<String, Map<String, String>> correctVotes = Map.of(
+          "X" ,Map.of("A","Z", "B", "X", "C", "Y"),
+          "Y" ,Map.of("A","X", "B", "Y", "C", "Z"),
+          "Z" ,Map.of("A","Y", "B", "Z", "C", "X"));
 
-        int resultTask1 = solveTask1(Utils.getFileFromResourceAsString(fileName));
-        int resultTask2 = solveTask2(Utils.getFileFromResourceAsString(fileName));
+  public static void main(String[] args) throws URISyntaxException, IOException {
+    List<String> lines = Files.readAllLines(Path.of(Objects.requireNonNull(Day1.class.getClassLoader().getResource("input-day2.txt")).toURI()));
 
-        System.out.println("Total score task 1: " + resultTask1);
-        System.out.println("Total score task 2: " + resultTask2);
-    }
+    System.out.println("Total score game 1: " + game1(lines));
+    System.out.println("Total score game 2: " + game2(lines));
+  }
 
-    public static int solveTask1 (String[] lines) {
-        AtomicInteger score = new AtomicInteger();
-        Arrays.stream(lines).forEach(line -> {
-            String opponentVote = line.split(" ")[0];
-            String myVote = line.split(" ")[1];
-            score.addAndGet(evaluate(opponentVote, myVote));
-            score.addAndGet(voteScorePoint(myVote));
-        });
-        return score.get();
-    }
+  public static int game1(List<String> lines) {
+    return lines.stream()
+            .map(line -> line.split(" "))
+            .mapToInt(line -> Integer.parseInt(evaluate.get(line[1]).get(line[0]).toString()) + voteScorePoints.get(line[1]))
+            .sum();
+  }
 
-    public static int solveTask2 (String[] lines) {
-        AtomicInteger score = new AtomicInteger();
-        Arrays.stream(lines).forEach(line -> {
-            String opponentVote = line.split(" ")[0];
-            String myVote = line.split(" ")[1];
-            String myNewVote = getCorrectVote(opponentVote, myVote);
-            score.addAndGet(evaluate(opponentVote, myNewVote));
-            score.addAndGet(voteScorePoint(myNewVote));
-        });
-        return score.get();
-    }
-
-    private static int voteScorePoint(String myVote) {
-        switch (myVote) {
-            case "X": return 1;
-            case "Y": return 2;
-            case "Z": return 3;
-        }
-        return 0;
-    }
-
-    private static int evaluate(String oponnentVote, String myVote) {
-
-        switch(myVote) {
-            case "X":
-                switch (oponnentVote) {
-                    case "A": return 3;
-                    case "B": return 0;
-                    case "C": return 6;
-                }
-            case "Y":
-                switch (oponnentVote) {
-                    case "A": return 6;
-                    case "B": return 3;
-                    case "C": return 0;
-                }
-            case "Z":
-                switch (oponnentVote) {
-                    case "A": return 0;
-                    case "B": return 6;
-                    case "C": return 3;
-                }
-        }
-        return 0;
-    }
-
-    private static String getCorrectVote(String oponnentVote, String result) {
-        switch (result) {
-            case "X":
-                switch (oponnentVote) {
-                    case "A": return "Z";
-                    case "B": return "X";
-                    case "C": return "Y";
-                }
-            case "Y":
-                switch (oponnentVote) {
-                    case "A": return "X";
-                    case "B": return "Y";
-                    case "C": return "Z";
-                }
-            case "Z":
-                switch (oponnentVote) {
-                    case "A": return "Y";
-                    case "B": return "Z";
-                    case "C": return "X";
-                }
-        }
-        return "";
-    }
+  public static int game2(List<String> lines) {
+    return lines.stream()
+            .map(line -> line.split(" "))
+            .mapToInt(line -> {
+              String correctVote = correctVotes.get(line[1]).get(line[0]);
+              return Integer.parseInt(evaluate.get(correctVote).get(line[0]).toString()) + voteScorePoints.get(correctVote);
+            })
+            .sum();
+  }
 }
