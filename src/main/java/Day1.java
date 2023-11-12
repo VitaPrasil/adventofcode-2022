@@ -1,45 +1,42 @@
-import utils.Utils;
-
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 public class Day1 {
 
-    public static void main(String[] args) {
-        String fileName = "input-day1.txt";
-        int resultTask1 = solveTask1(Utils.getFileFromResourceAsString(fileName));
-        int resultTask2 = solveTask2(Utils.getFileFromResourceAsString(fileName));
+  public static void main(String[] args) throws URISyntaxException, IOException {
+    List<String> lines = Files.readAllLines(Path.of(Objects.requireNonNull(Day1.class.getClassLoader().getResource("input-day1.txt")).toURI()));
+    System.out.println("Elf with most calories: " + task1(lines));
+    System.out.println("Top 3 elves with most calories: " + task2(lines));
+  }
 
-        System.out.println("Elf with most calories: " + resultTask1);
-        System.out.println("Top 3 elves with most calories: " + resultTask2);
-    }
+  public static int task1(List<String> lines) {
+    return computeCalories(lines).getFirst();
+  }
 
-    public static int solveTask1(String[] lines) {
-        List<Integer> caloriesPerElf = createSorterElfCaloriesList(lines);
-        return caloriesPerElf.get(0);
-    }
+  public static int task2(List<String> lines) {
+    return computeCalories(lines).stream()
+            .limit(3)
+            .mapToInt(c -> c)
+            .sum();
+  }
 
-    public static int solveTask2(String[] lines) {
-        List<Integer> caloriesPerElf = createSorterElfCaloriesList(lines);
-        return caloriesPerElf.get(0) + caloriesPerElf.get(1) + caloriesPerElf.get(2);
-    }
+  private static LinkedList<Integer> computeCalories(List<String> lines) {
+    LinkedList<Integer> calories = new LinkedList<>(List.of(0));
+    lines.forEach(line -> {
+      if (line.isEmpty()) {
+        calories.add(0);
+      } else {
+        calories.add(calories.removeLast() + Integer.parseInt(line));
+      }
+    });
+    calories.sort(Comparator.reverseOrder());
 
-    private static List<Integer> createSorterElfCaloriesList(String[] lines) {
-        List<Integer> caloriesPerElf = new ArrayList<>();
-        caloriesPerElf.add(0);
-
-        Arrays.stream(lines).forEach(line -> {
-            if(line.compareTo("") == 0) {
-                caloriesPerElf.add(0);
-            } else {
-                int lastElfCalories = caloriesPerElf.get(caloriesPerElf.size() - 1);
-                caloriesPerElf.set(caloriesPerElf.size() - 1, lastElfCalories + Integer.valueOf(line));
-            }
-        });
-        caloriesPerElf.sort(Comparator.reverseOrder());
-
-        return caloriesPerElf;
-    }
+    return calories;
+  }
 }
